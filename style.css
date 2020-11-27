@@ -18,6 +18,7 @@ img {
 }
 #book-list {
     margin-left:0px;
+    list-style-type: none;
 }
 #book-list #title{
     font-size: 18px;
