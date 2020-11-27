@@ -1,0 +1,25 @@
+body{
+    font-family: sans-serif;
+}
+h3{
+    margin-left: 50px;
+}
+#books-container{
+    width: 200px;
+    height: 300px;
+    /* background-color: cadetblue; */
+    margin-left: 50px;
+}
+img {
+    width: 200px;
+    height: 300px;
+    background-color: cadetblue;
+    /* margin-left: 80px; */
+}
+#book-list {
+    margin-left:0px;
+}
+#book-list #title{
+    font-size: 18px;
+    color: burlywood;
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <style class="css"></style> -->
+    <link rel="stylesheet" href="style.css" />
+    <title>Reading Tracker</title>
+  </head>
+
+  <body>
+    <h3>My Reading Tracker</h3>
+    <!-- firebase setup -->
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
+    <!-- inject data -->
+    <script src="/index.js"></script>
+    <div id="books-container">
+      <div id="book-list" class="book-list">
+        <img src="/agrainofwheat.jpeg" alt="book" />
+        <!-- <ul id="book-details"> -->
+          <p id="title"></p>
+          <p id="author"></p>
+          <p id="year"></p>
+          <p id="genre"></p>
+          <p id="added"></p>
+        <!-- </ul> -->
+      </div>
+    </div>
+  </body>
+</html>
