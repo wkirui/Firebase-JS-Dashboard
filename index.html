@@ -3,8 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <style class="css"></style> -->
     <link rel="stylesheet" href="style.css" />
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
     <title>Reading Tracker</title>
   </head>
 
@@ -15,8 +17,37 @@
     <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
     <script src="/index.js"></script>
-            <!-- <img src="/agrainofwheat.jpeg" alt="book" /> -->
-    <div id="books-container">
+    <!-- <img src="/agrainofwheat.jpeg" alt="book" /> -->
+    <div id="books-container"></div>
+    <h4>Add A New Book</h4>
+    <div class="new-book">
+      <form>
+        <p>
+          <label>Title</label>
+          <input type="text" />
+        </p>
+        <p>
+          <label>Author</label>
+          <input type="text" />
+        </p>
+        <p>
+          <label>Genre</label>
+          <input type="text" />
+        </p>
+        <p>
+          <label>Date Published</label>
+          <input type="datetime-local" />
+        </p>
+        <p>
+          <label>Date</label>
+          <input type="datetime-local" />
+        </p>
+        <p>
+          <label>Rating</label>
+          <input type="number" />
+        </p>
+        <!-- <input type="submit"> -->
+      </form>
     </div>
   </body>
 </html>

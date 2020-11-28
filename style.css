@@ -5,22 +5,31 @@ h3{
     margin-left: 50px;
 }
 #books-container{
-    width: 200px;
-    height: 300px;
-    /* background-color: cadetblue; */
+    display: inline-block;
     margin-left: 50px;
 }
 img {
-    width: 200px;
-    height: 300px;
+    width: 150px;
+    height: 200px;
     background-color: cadetblue;
     /* margin-left: 80px; */
 }
-#book-list {
-    margin-left:0px;
+#book-details {
+    display: inline-block;
+    position: relative;
     list-style-type: none;
+    text-align: left;
+    margin-left: 10px;
+    margin-bottom: 30px;
+    line-height: 2px;
 }
-#book-list #title{
+#book-details #title{
     font-size: 18px;
     color: burlywood;
+}
+
+#book-details .stars-x {
+    color:#ffc700;
+    text-decoration: none;
+    position: relative;
 }

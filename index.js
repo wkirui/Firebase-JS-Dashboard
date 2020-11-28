@@ -1,7 +1,3 @@
-// console.log(location.hash);
-// console.log('js loaded');
-// console.log(localStorage);
-// console.log(location.hostname);
 
 // setup firebase
 var firebaseConfig = {
@@ -20,32 +16,19 @@ var firebaseConfig = {
 
   // get db
   const db = firebase.firestore();
-//   console.log(db);
 
-// get data
+// save data into an array
 let data = [];
 db.collection('books').get().then(function(querySnapshot){
     querySnapshot.forEach(function(doc){
         book_info = {id: doc.id, ...doc.data()}
         data.push({id: doc.id, ...doc.data()});
 
-        // console.log(doc.data());
-        // console.log(data.length);
-
-        // get data
-        // var title = doc.data().title;
-        // var author = doc.data().author;
-        // var published = new Date((doc.data().published.seconds + doc.data().published.nanoseconds)*1000).toLocaleDateString();
-        // var genre = doc.data().genre;
-        // var added = new Date((doc.data().added.seconds + doc.data().added.nanoseconds)*1000).toLocaleDateString();
-        // var rating = doc.data().rating;
-
     });
     // add data to the DOM
     var listPlaceHolder = document.getElementById('books-container');
     var bookList = ''
     for(var i=0; i< data.length; i++){
-        console.log(data[i].title);
 
         var title = data[i].title;
         var author = data[i].author;
@@ -54,15 +37,20 @@ db.collection('books').get().then(function(querySnapshot){
         var added = new Date((data[i].added.seconds + data[i].added.nanoseconds)*1000).toLocaleDateString();
         var rating = data[i].rating;
 
-        // var itemList = '' //document.createElement('li');
-        bookList += '<li id="book-list">'
+        var ratingScore = ''
+        for(var j=0; j<rating; j++){
+            var val = j+1;
+            ratingScore+='<a class="stars-x" href="#">✭</a>';
+
+        }
+        bookList += '<li id="book-details">'
         bookList += '<img src="" alt="">'
-        bookList += '<p id="title" >' + 'Title: ' + title +'</p>'
-        bookList += '<p id="author" >' + 'Author: ' + author +'</p>'
-        bookList += '<p id="year" >' + 'Published: ' + published +'</p>'
-        bookList += '<p id="genre" >' + 'Genre: ' + genre +'</p>'
-        bookList += '<p id="rating" >' + 'Rating: ' + rating +'</p>'
-        bookList += '<p id="added" >' + 'Date Added: ' + added +'</p>'
+        bookList += '<p id="title" >' + ' ' + title +'</p>'
+        bookList += '<p id="author" >' + 'Author : ' + author +'</p>'
+        bookList += '<p id="year" >' + 'Published : ' + published +'</p>'
+        bookList += '<p id="genre" >' + 'Genre : ' + genre +'</p>'
+        bookList += '<p id="added" >' + 'Date Added : ' + added +'</p>'
+        bookList += '<p id ="rating">'+'Rating : ' + ratingScore+'</p>';
         bookList += '</li>'
     }
     
@@ -71,10 +59,5 @@ db.collection('books').get().then(function(querySnapshot){
 }).catch(function(error){
     console.log("Error getting documents ", error);
 });
-// console.log(data);
 
-// display data
-// console.log(data.forEach(function(d){
-//     console.log(d);
-//     // console.log('author:', d['author']);
-// }));
+// add data to the database
