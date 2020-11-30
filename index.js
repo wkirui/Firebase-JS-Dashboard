@@ -142,9 +142,14 @@ function saveFormData(title, author, genre, published, pages, rating, added){
 
 // generate charts
 let pieChart = document.getElementById('pieChart');
-pieChart.height = 300;
-pieChart.width  = 300;
+pieChart.height = 200;
+pieChart.width  = 200;
 let ctx = pieChart.getContext('2d');
+
+let progressChart = document.getElementById('progressChart');
+progressChart.height = 200;
+progressChart.width  = 200;
+let progressCtx = progressChart.getContext('2d');
 
 // function to draw line
 function drawLine(ctx, startX, startY, endX, endY){
@@ -206,15 +211,36 @@ const Piechart = function(options){
             let offsetX = 15;
             let offsetY = 10;
 
+            // reposition labels for doughnut shape
+            if (this.options.doughnutHoleSize){
+                let offset = (pieRadius * this.options.doughnutHoleSize );
+                let labelX = this.canvas.width/2 + (-offset + pieRadius / 2) * Math.cos(start_angle + slice_angle/2);
+                let labelY = this.canvas.height/2 + (offset + pieRadius / 2) * Math.sin(start_angle + slice_angle/2);               
+            }
+
             let labelText = Math.round(100 * val / total_value);
             this.ctx.fillStyle = 'white';
             this.ctx.font = 'bold 16px sans-serif';
             if(labelText > 0){
-                this.ctx.fillText(labelText+'%', labelX - offsetX, labelY + offsetY);
+                this.ctx.fillText(labelText+'%', labelX-offsetX, labelY+offsetY);
             }
             start_angle += slice_angle;
             color_index++;  
         }
+        // create doughnut chart
+        if (this.options.doughnutHoleSize){
+            drawPieSlice(
+                this.ctx,
+                this.canvas.width/2,
+                this.canvas.height/2,
+                this.options.doughnutHoleSize * Math.min(this.canvas.width/2,this.canvas.height/2),
+                0,
+                2 * Math.PI,
+                "white"
+            );
+        }
+
+        // add legend
         if(this.options.legend){
             color_index = 0;
             let legendHTML = '';
@@ -241,6 +267,43 @@ myPiechart = new Piechart(
 )
 setTimeout(() =>{
     console.log("Drawing chart in 2 seconds");
-    console.log(genreList);
+    // console.log(genreList);
     myPiechart.draw();
+}, 2000);
+
+
+// get total books read
+let TargetBooks = 30;
+let totalBooks = 0;
+let progressReport = {};
+
+// create total books object
+setTimeout(() => {
+    for (let x in genreList){
+        let val = genreList[x]
+        totalBooks += val;
+    }
+    progressReport['Pending'] = TargetBooks;
+    progressReport['Read'] = totalBooks;
+}, 2000);
+
+console.log(progressReport);
+
+// plot progress distribution
+let progressLegend = document.getElementById('progressLegend');
+
+myProgressChart = new Piechart(
+    {
+        canvas: progressChart,
+        data: progressReport,
+        colors: ['lightgrey','forestgreen'],
+        legend: progressLegend,
+        doughnutHoleSize: 0.3
+    }
+)
+// plot progress chart
+setTimeout(() =>{
+    console.log("Drawing chart in 2 seconds");
+    // console.log(genreList);
+    myProgressChart.draw();
 }, 2000);
