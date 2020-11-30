@@ -11,43 +11,60 @@
   </head>
 
   <body>
-    <h3>My Reading Tracker</h3>
+    <h2>My Reading Tracker</h2>
+    <!-- <h4><a href="new-book.html">Add A Book</a></h4> -->
     <!-- firebase setup -->
     <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
-    <script src="/index.js"></script>
     <!-- <img src="/agrainofwheat.jpeg" alt="book" /> -->
+    
+    <canvas id="pieChart"></canvas>
+    <div id ="myLegend"></div>
     <div id="books-container"></div>
-    <h4>Add A New Book</h4>
-    <div class="new-book">
-      <form>
+
+    <h3>Add A New Book</h3>
+    <div class="new-books" id="newBooks">
+      <form id="new-books-form">
         <p>
           <label>Title</label>
-          <input type="text" />
+          <input type="text" name="new-title" id="new-title" />
         </p>
         <p>
           <label>Author</label>
-          <input type="text" />
+          <input type="text" name="new-author" id="new-author" />
         </p>
         <p>
           <label>Genre</label>
-          <input type="text" />
+          <input type="text" name="new-genre" id="new-genre" />
         </p>
         <p>
           <label>Date Published</label>
-          <input type="datetime-local" />
+          <input type="date" name="new-published" id="new-published" />
+        </p>
+        <p>
+          <label>Pages</label>
+          <input type="number" name="new-pages" id="new-pages" />
         </p>
         <p>
           <label>Date</label>
-          <input type="datetime-local" />
+          <input type="datetime-local" name="new-added" id="new-added" />
         </p>
         <p>
           <label>Rating</label>
-          <input type="number" />
+          <input type="number" name="new-rating" id="new-rating" />
         </p>
-        <!-- <input type="submit"> -->
+        <p>
+          <label>Photo</label>
+          <input type="image" name="new-photo" id="new-photo" />
+        </p>
+        <p class="new-form">
+          <button type="submit">submit</button>
+        </p>
       </form>
     </div>
+
+    <script src="/index.js"></script>
   </body>
+  <!-- <script src="/index.js"></script> -->
 </html>

@@ -1,19 +1,21 @@
 body{
     font-family: sans-serif;
+    margin-left: 100px;
+    margin-right: 100px;
 }
-h3{
+h2, h3{
     margin-left: 50px;
 }
 #books-container{
     display: inline-block;
     margin-left: 50px;
 }
-img {
+/* img {
     width: 150px;
     height: 200px;
     background-color: cadetblue;
-    /* margin-left: 80px; */
-}
+    margin-left: 80px;
+} */
 #book-details {
     display: inline-block;
     position: relative;
@@ -32,4 +34,10 @@ img {
     color:#ffc700;
     text-decoration: none;
     position: relative;
+}
+#new-books-form {
+    display: grid;
+    position: relative;
+    text-align: left;
+    margin-left: 50px;
 }
