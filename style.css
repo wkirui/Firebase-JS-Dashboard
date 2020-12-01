@@ -57,11 +57,18 @@ h2, h3{
     line-height: 20px;
     white-space: pre-line;
 }
+.new-books {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: lightgray;
+    font-size: 20px;
+}
 #new-books-form {
     /* display: flexbox; */
     position: relative;
     display  : grid;
-    grid-gap : 20px;
+    grid-gap : 5px;
     grid-template-columns : repeat(2, 1fr);
     grid-template-rows    : 10em 1em 1em 1;
     text-align: left;
@@ -69,8 +76,34 @@ h2, h3{
     margin-left: 50px;
     margin-right: 50px;
 }
+#new-books-form #submit{
+    text-align: center;
+    position: relative;
+    width: 30vw;
+}
+#new-books-form #sign-in{
+    text-align: center;
+    position: relative;
+    width: 30vw;
+}
+.collapsedForm {
+    background-color: rgba(40, 151, 96, 0.192);
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 80vw;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-size: 18px;
+  }
+  
+  .active, .collapsedForm:hover {
+    background-color: #ccc;
+  }
 
-@media (max-device-width: 850px){
+
+@media (max-device-width: 800px){
     body {
         margin-right: 20px;
         margin-left: 20px;
@@ -95,5 +128,15 @@ h2, h3{
     }
     #new-books-form {
         display: inline;
+    }
+    #new-books-form #sign-in{
+        text-align: center;
+        position: relative;
+        width: 60vw;
+    }
+    #new-books-form #submit{
+        text-align: center;
+        position: relative;
+        width: 60vw;
     }
 }
