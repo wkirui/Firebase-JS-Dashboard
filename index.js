@@ -44,6 +44,7 @@ db.collection('books').get().then(function(querySnapshot){
         let genre = data[i].genre;
         let added = new Date((data[i].added.seconds + data[i].added.nanoseconds)*1000).toLocaleDateString();
         let rating = data[i].rating;
+        let imgurl = data[i].imgurl;
 
         let ratingScore = ''
         for(let j=0; j<rating; j++){
@@ -52,7 +53,7 @@ db.collection('books').get().then(function(querySnapshot){
 
         }
         bookList += '<li id="book-details">'
-        // bookList += '<img src="" alt="">'
+        bookList += '<img src=" '+ imgurl +'"+ alt="">'
         bookList += '<canvas></canvas>'
         bookList += '<p id="title" >' + ' ' + title +'</p>'
         bookList += '<p id="author" >' + 'Author : ' + author +'</p>'
@@ -99,7 +100,7 @@ function submitForm(e){
     let newPhoto = getFormValue('new-photo');
     let newPhotoName = newPhoto.split('\\')[2];
     let fileName = (+new Date()) + '-' + newPhotoName;
-    let metadata = {contentType: newPhoto.size}
+    let metadata = {contentType: 'image/jpeg'}
 
     console.log(newPhoto);
     console.log(fileName);
@@ -119,17 +120,22 @@ function saveFormData(title, author, genre, published, pages, rating, added,  ne
     
     // save image
     let imgURL = '';
-    const saveFile = storageRef.child(newPhotoName).put(fileName, metadata);
-    saveFile
-        .then(snapshot => snapshot.storageRef.getDownloadURL())
-        .then((url) => {
-            imgURL = url;
-            console.log(url);
-            // document.querySelector('#someImageTagID').src = url;
+    const imageRef = storageRef.child('images/' + newPhotoName)
+    imageRef.put(fileName, metadata)
+        .then(snapshot => {
+            return imageRef.getDownloadURL()
+            .then((url) => {
+                console.log("File uploaded to: ", url);
+                imgURL = url;
+            })
         })
         .catch(console.error);
 
-    console.log(imgURL);
+    // console.log("Image saved to: ", imgURL);
+    setTimeout(() => {
+        console.log("Image saved to: ", imgURL);
+        
+    }, 1000);
     
     // create book document
     let bookDetails = {
@@ -139,7 +145,8 @@ function saveFormData(title, author, genre, published, pages, rating, added,  ne
         published: published,
         pages: pages,
         rating: rating,
-        added: added
+        added: added,
+        imgurl: imgURL
     };
     // add data to the database
     db.collection('books').add(bookDetails).then(function(docRef){
