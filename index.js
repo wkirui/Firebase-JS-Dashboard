@@ -265,10 +265,55 @@ setTimeout(() =>{
 
 
 
-// Save Data
+let authResult = false;
+
+// authentication
+function googleSignIn(){
+
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = result.credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+
+        console.log(token.length);
+        if(token.length > 0){
+            authResult = true
+        }
+        // console.log("token:", token);
+        // console.log("user:", user)
+        // ...
+    }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+    });
+
+    return authResult
+
+}
+
+// let loginStatus = false;//googleSignIn();
+// console.log(authResult);
 
 // add data to the database
 document.getElementById('new-books-form').addEventListener('submit',submitForm);
+
+// watch for sign in
+document.getElementById('sign-in').addEventListener('click', signInWithGoogle);
+
+function signInWithGoogle(e){
+    e.preventDefault();
+    // alert('Login with Google?');
+    // alert(authResult);
+    googleSignIn();
+}
+console.log("initial result:", authResult);
 
 function submitForm(e){
     e.preventDefault();
@@ -289,7 +334,12 @@ function submitForm(e){
     console.log(metadata);
 
     // save data
-    saveFormData(newTitle, newAuthor, newGenre, newPublished, newPages, newRating, newAdded, newPhotoName, fileName, metadata);
+    if(authResult){
+        console.log("After signing in:", authResult);
+        saveFormData(newTitle, newAuthor, newGenre, newPublished, newPages, newRating, newAdded, newPhotoName, fileName, metadata);
+    } else {
+        alert("Please login to proceed!");
+    }
 }
 
 // function to get form values
@@ -300,6 +350,7 @@ function getFormValue(id){
 // function to save data
 function saveFormData(title, author, genre, published, pages, rating, added,  newPhotoName, fileName, metadata){
     
+    if(newPhotoName != undefined){
     // save image
     let imgURL = '';
     const imageRef = storageRef.child('images/' + newPhotoName)
@@ -318,6 +369,7 @@ function saveFormData(title, author, genre, published, pages, rating, added,  ne
         console.log("Image saved to: ", imgURL);
         
     }, 1000);
+}
     
     // create book document
     let bookDetails = {
@@ -337,4 +389,21 @@ function saveFormData(title, author, genre, published, pages, rating, added,  ne
         console.log("Error adding document: " + error);
     });
 
+}
+
+
+// collapse new book form
+var coll = document.getElementsByClassName("collapsedForm");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
 }

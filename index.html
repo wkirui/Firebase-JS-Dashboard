@@ -32,9 +32,11 @@
     </div>
     <div id="books-container"></div>
 
-    <h3>Add A New Book</h3>
+    <button type="button" class="collapsedForm"> Add A New Book </button>
+    <!-- <h3>Add A New Book</h3> -->
     <div class="new-books" id="newBooks">
       <form id="new-books-form">
+
         <p>
           <label>Title</label>
           <input type="text" name="new-title" id="new-title" />
@@ -67,8 +69,12 @@
           <label>Photo</label>
           <input type="file" name="new-photo" id="new-photo" />
         </p>
+        <p class="new-sign">
+          <button id="sign-in">Sign In with Google</button>
+        </p>
+
         <p class="new-form">
-          <button type="submit">submit</button>
+          <button type="submit" id="submit">Submit</button>
         </p>
       </form>
     </div>
