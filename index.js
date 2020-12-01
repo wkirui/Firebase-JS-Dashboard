@@ -1,4 +1,3 @@
-
 // setup firebase
 let firebaseConfig = {
     apiKey: "AIzaSyCWK4mBf3fxOUMotvoMtFcfPu8VkTlvfbo",
@@ -19,12 +18,6 @@ let firebaseConfig = {
   let storageRef = firebase.storage().ref();
   let provider = new firebase.auth.GoogleAuthProvider(); // google sign in
 
-
-
-//   let storageRef = storage.ref();
-//   let booksRef = storageRef.child('books');
-
-// console.log(storage);
 
 // save data into an array
 let data = [];
