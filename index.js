@@ -17,6 +17,10 @@ let firebaseConfig = {
   // get db
   const db = firebase.firestore();
   let storageRef = firebase.storage().ref();
+  let provider = new firebase.auth.GoogleAuthProvider(); // google sign in
+
+
+
 //   let storageRef = storage.ref();
 //   let booksRef = storageRef.child('books');
 
@@ -84,78 +88,6 @@ db.collection('books').get().then(function(querySnapshot){
 }).catch(function(error){
     console.log("Error getting documents ", error);
 });
-
-// add data to the database
-document.getElementById('new-books-form').addEventListener('submit',submitForm);
-
-function submitForm(e){
-    e.preventDefault();
-    let newTitle = getFormValue('new-title');
-    let newAuthor = getFormValue('new-author');
-    let newGenre = getFormValue('new-genre');
-    let newPublished = new Date(getFormValue('new-published'));
-    let newPages = getFormValue('new-pages');
-    let newRating = getFormValue('new-rating');
-    let newAdded = new Date(getFormValue('new-added'));
-    let newPhoto = getFormValue('new-photo');
-    let newPhotoName = newPhoto.split('\\')[2];
-    let fileName = (+new Date()) + '-' + newPhotoName;
-    let metadata = {contentType: 'image/jpeg'}
-
-    console.log(newPhoto);
-    console.log(fileName);
-    console.log(metadata);
-
-    // save data
-    saveFormData(newTitle, newAuthor, newGenre, newPublished, newPages, newRating, newAdded, newPhotoName, fileName, metadata);
-}
-
-// function to get form values
-function getFormValue(id){
-    return document.getElementById(id).value;
-}
-
-// function to save data
-function saveFormData(title, author, genre, published, pages, rating, added,  newPhotoName, fileName, metadata){
-    
-    // save image
-    let imgURL = '';
-    const imageRef = storageRef.child('images/' + newPhotoName)
-    imageRef.put(fileName, metadata)
-        .then(snapshot => {
-            return imageRef.getDownloadURL()
-            .then((url) => {
-                console.log("File uploaded to: ", url);
-                imgURL = url;
-            })
-        })
-        .catch(console.error);
-
-    // console.log("Image saved to: ", imgURL);
-    setTimeout(() => {
-        console.log("Image saved to: ", imgURL);
-        
-    }, 1000);
-    
-    // create book document
-    let bookDetails = {
-        title: title,
-        author: author,
-        genre: genre,
-        published: published,
-        pages: pages,
-        rating: rating,
-        added: added,
-        imgurl: imgURL
-    };
-    // add data to the database
-    db.collection('books').add(bookDetails).then(function(docRef){
-        console.log("Document written with ID: " + docRef.id);
-    }).catch(function(error){
-        console.log("Error adding document: " + error);
-    });
-
-}
 
 // add updated timestamp
 // let docRef = db.collection('books').doc(id);
@@ -330,3 +262,79 @@ setTimeout(() =>{
     // console.log(genreList);
     myProgressChart.draw();
 }, 2000);
+
+
+
+// Save Data
+
+// add data to the database
+document.getElementById('new-books-form').addEventListener('submit',submitForm);
+
+function submitForm(e){
+    e.preventDefault();
+    let newTitle = getFormValue('new-title');
+    let newAuthor = getFormValue('new-author');
+    let newGenre = getFormValue('new-genre');
+    let newPublished = new Date(getFormValue('new-published'));
+    let newPages = getFormValue('new-pages');
+    let newRating = getFormValue('new-rating');
+    let newAdded = new Date(getFormValue('new-added'));
+    let newPhoto = getFormValue('new-photo');
+    let newPhotoName = newPhoto.split('\\')[2];
+    let fileName = (+new Date()) + '-' + newPhotoName;
+    let metadata = {contentType: 'image/jpeg'}
+
+    console.log(newPhoto);
+    console.log(fileName);
+    console.log(metadata);
+
+    // save data
+    saveFormData(newTitle, newAuthor, newGenre, newPublished, newPages, newRating, newAdded, newPhotoName, fileName, metadata);
+}
+
+// function to get form values
+function getFormValue(id){
+    return document.getElementById(id).value;
+}
+
+// function to save data
+function saveFormData(title, author, genre, published, pages, rating, added,  newPhotoName, fileName, metadata){
+    
+    // save image
+    let imgURL = '';
+    const imageRef = storageRef.child('images/' + newPhotoName)
+    imageRef.put(fileName, metadata)
+        .then(snapshot => {
+            return imageRef.getDownloadURL()
+            .then((url) => {
+                console.log("File uploaded to: ", url);
+                imgURL = url;
+            })
+        })
+        .catch(console.error);
+
+    // console.log("Image saved to: ", imgURL);
+    setTimeout(() => {
+        console.log("Image saved to: ", imgURL);
+        
+    }, 1000);
+    
+    // create book document
+    let bookDetails = {
+        title: title,
+        author: author,
+        genre: genre,
+        published: published,
+        pages: pages,
+        rating: rating,
+        added: added,
+        imgurl: imgURL
+    };
+    // add data to the database
+    db.collection('books').add(bookDetails).then(function(docRef){
+        console.log("Document written with ID: " + docRef.id);
+    }).catch(function(error){
+        console.log("Error adding document: " + error);
+    });
+
+}
