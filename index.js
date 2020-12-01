@@ -16,6 +16,11 @@ let firebaseConfig = {
 
   // get db
   const db = firebase.firestore();
+  let storageRef = firebase.storage().ref();
+//   let storageRef = storage.ref();
+//   let booksRef = storageRef.child('books');
+
+// console.log(storage);
 
 // save data into an array
 let data = [];
@@ -91,9 +96,17 @@ function submitForm(e){
     let newPages = getFormValue('new-pages');
     let newRating = getFormValue('new-rating');
     let newAdded = new Date(getFormValue('new-added'));
+    let newPhoto = getFormValue('new-photo');
+    let newPhotoName = newPhoto.split('\\')[2];
+    let fileName = (+new Date()) + '-' + newPhotoName;
+    let metadata = {contentType: newPhoto.size}
+
+    console.log(newPhoto);
+    console.log(fileName);
+    console.log(metadata);
 
     // save data
-    saveFormData(newTitle, newAuthor, newGenre, newPublished, newPages, newRating, newAdded);
+    saveFormData(newTitle, newAuthor, newGenre, newPublished, newPages, newRating, newAdded, newPhotoName, fileName, metadata);
 }
 
 // function to get form values
@@ -102,7 +115,21 @@ function getFormValue(id){
 }
 
 // function to save data
-function saveFormData(title, author, genre, published, pages, rating, added){
+function saveFormData(title, author, genre, published, pages, rating, added,  newPhotoName, fileName, metadata){
+    
+    // save image
+    let imgURL = '';
+    const saveFile = storageRef.child(newPhotoName).put(fileName, metadata);
+    saveFile
+        .then(snapshot => snapshot.storageRef.getDownloadURL())
+        .then((url) => {
+            imgURL = url;
+            console.log(url);
+            // document.querySelector('#someImageTagID').src = url;
+        })
+        .catch(console.error);
+
+    console.log(imgURL);
     
     // create book document
     let bookDetails = {
@@ -114,8 +141,6 @@ function saveFormData(title, author, genre, published, pages, rating, added){
         rating: rating,
         added: added
     };
-    // console.log(bookDetails);
-
     // add data to the database
     db.collection('books').add(bookDetails).then(function(docRef){
         console.log("Document written with ID: " + docRef.id);
@@ -125,20 +150,11 @@ function saveFormData(title, author, genre, published, pages, rating, added){
 
 }
 
-// generate data summary
-// setTimeout(() => {
-//     console.log('running after 1 second')
-//     generateSummary(genreList)
-    
-// }, 1000);
-
-// function generateSummary(df){
-//     for(let val in df){
-//         console.log("val:", val);
-//         console.log(df[val]);
-
-//     }
-// }
+// add updated timestamp
+// let docRef = db.collection('books').doc(id);
+// let updateTimeStamp = docRef.updated({
+//     timestamp: firebase.firestore.FieldValue.serverTimestamp()
+// })
 
 // generate charts
 let pieChart = document.getElementById('pieChart');
