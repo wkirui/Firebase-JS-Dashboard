@@ -63,8 +63,9 @@ h2, h3{
     margin-right: 60px;
     
 }
-#book-details #delete-button {
+#book-details #delete-button:hover {
     /* float: right; */
+    color: rgb(199, 71, 71);
     
 }
 .new-books {
