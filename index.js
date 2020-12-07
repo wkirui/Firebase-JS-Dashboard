@@ -45,6 +45,7 @@ db.collection("books")
       ).toLocaleDateString();
       let rating = data[i].rating;
       let imgurl = data[i].imgurl;
+      let pages = data[i].pages;
 
       let ratingScore = "";
       for (let j = 0; j < rating; j++) {
@@ -58,6 +59,7 @@ db.collection("books")
       bookList += '<p id="year" >' + "Published : " + published + "</p>";
       bookList += '<p id="genre" >' + "Genre : " + genre + "</p>";
       bookList += '<p id="added" >' + "Date Added : " + added + "</p>";
+      bookList += '<p id="pages" >' + "Pages : " + pages + "</p>";
       bookList += '<p id ="rating">' + "Rating : " + ratingScore + "</p>";
       bookList += '<button id ="update-button"> Update </button>';
       bookList += '<button id ="delete-button"> Delete </button>';
