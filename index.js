@@ -271,9 +271,7 @@ let authResult = false;
 
 // authentication
 function googleSignIn() {
-  firebase.auth().signInWithRedirect(provider);
-
-  firebase.auth().getRedirectResult().then(function (result) {
+  firebase.auth().signInWithPopup(provider).then(function (result) {
       if(!user){
       // This gives you a Google Access Token. You can use it to access the Google API.
       var token = result.credential.accessToken;
