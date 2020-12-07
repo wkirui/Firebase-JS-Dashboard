@@ -258,7 +258,7 @@ let progressLegend = document.getElementById("progressLegend");
 myProgressChart = new Piechart({
   canvas: progressChart,
   data: progressReport,
-  colors: ["lightgrey", "forestgreen"],
+  colors: ["lightgrey", "#66cc33"],
   legend: progressLegend,
   doughnutHoleSize: 0.3,
 });
@@ -271,22 +271,24 @@ let authResult = false;
 
 // authentication
 function googleSignIn() {
-  firebase
-    .auth()
-    .signInWithPopup(provider)
-    .then(function (result) {
+  firebase.auth().signInWithRedirect(provider);
+
+  firebase.auth().getRedirectResult().then(function (result) {
+      if(!user){
       // This gives you a Google Access Token. You can use it to access the Google API.
       var token = result.credential.accessToken;
       // The signed-in user info.
       var user = result.user;
+      console.log(user);
 
       console.log(token.length);
       if (token.length > 0) {
         authResult = true;
+      }  
+      } else{
+        authResult = true;
+        console.log(user);
       }
-      // console.log("token:", token);
-      // console.log("user:", user)
-      // ...
     })
     .catch(function (error) {
       // Handle Errors here.
