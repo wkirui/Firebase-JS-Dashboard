@@ -53,7 +53,7 @@ db.collection("books")
         ratingScore += '<a class="stars-x" href="#">✭</a>';
       }
       bookList += '<li id="book-details">';
-      bookList += '<img src= "'+ imgurl +'" width="100px" height="100px" style="float:left">';
+      bookList += '<img src="'+ imgurl +'" width="100px" height="100px" style="float:left">';
       bookList += '<p id="title" >' + " " + title + "</p>";
       bookList += '<p id="author" >' + "Author : " + author + "</p>";
       bookList += '<p id="year" >' + "Published : " + published + "</p>";
@@ -329,7 +329,7 @@ function submitForm(e) {
   let newPhoto = getFormValue("new-photo");
   let newPhotoName = newPhoto.split("\\")[2];
   let fileName = +new Date() + "-" + newPhotoName;
-  let metadata = { contentType: "image/jpeg" };
+  // let metadata = { contentType: "image/jpg" };
 
   // save data
   if (authResult) {
@@ -342,8 +342,8 @@ function submitForm(e) {
       newRating,
       newAdded,
       newPhotoName,
-      fileName,
-      metadata
+      fileName
+      // metadata
     );
   } else {
     alert("Please login to proceed!");
@@ -366,16 +366,18 @@ function saveFormData(
   rating,
   added,
   newPhotoName,
-  fileName,
-  metadata
+  fileName
+  // metadata
 ) {
   let imgURL = "";
   if (newPhotoName != undefined) {
     // save image
     const imageRef = storageRef.child("images/" + newPhotoName);
-    imageRef.put(fileName, metadata).then((snapshot) => {
+    imageRef.put(fileName).then((snapshot) => {
       return imageRef.getDownloadURL().then((url) => {
+        // text_url = url.toString();
         console.log("Image uploaded successfully!", url);
+        // console.log(text_url);
 
         // define book document to save
         let bookDetails = {

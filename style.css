@@ -33,6 +33,7 @@ h2, h3{
     height: 200px;
     background-color: cadetblue;
     margin-left: 80px;
+    position: left;
 } */
 #book-details {
     display: inline-block;
